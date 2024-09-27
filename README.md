@@ -21,20 +21,20 @@ The library is designed to handle real-time, continuous data streams for applica
 To include **rxssm** in your project, add it to your `Cargo.toml`:
 
 ### Core Usage (Without RxRust)
-'''toml
+```toml
 [dependencies]
 rxssm = "0.1"
 serde = { version = "1.0", features = ["derive"] }
-'''
+```
 
 ### With RxRust Integration
 If you want to use **RxRust** for reactive streams, enable the `rxrust_integration` feature:
 
-'''toml
+```toml
 [dependencies]
 rxssm = { version = "0.1", features = ["rxrust_integration"] }
 serde = { version = "1.0", features = ["derive"] }
-'''
+```
 
 ## Example Usage
 
@@ -42,7 +42,7 @@ serde = { version = "1.0", features = ["derive"] }
 
 In this example, we create a state-space model and apply a stateless transformation to incoming data:
 
-'''rust
+```rust
 use rxssm::models::{KalmanFilter, StatelessTransform};
 use serde::{Serialize, Deserialize};
 
@@ -64,13 +64,13 @@ fn main() {
     let serialized = serde_json::to_string(&kalman).unwrap();
     println!("Serialized state: {}", serialized);
 }
-'''
+```
 
 ### RxRust Integration (Reactive Pipeline)
 
 If you enable the `rxrust_integration` feature, you can use **RxRust** to build reactive pipelines that stream data through the state-space models.
 
-'''rust
+```rust
 #[cfg(feature = "rxrust_integration")]
 use rxrust::prelude::*;
 use rxssm::models::KalmanFilter;
@@ -84,7 +84,7 @@ fn main() {
         .map(move |data| kalman.update(data))
         .subscribe(|output| println!("Reactive output: {}", output));
 }
-'''
+```
 
 ## Features
 
@@ -102,7 +102,7 @@ fn main() {
 Serialization of model states is powered by `serde`, allowing for efficient checkpointing and recovery of model states. This is crucial for long-running applications or systems that need fault tolerance.
 
 ### Example of Serialization
-'''rust
+```rust
 use rxssm::models::KalmanFilter;
 use serde::{Serialize, Deserialize};
 
@@ -124,7 +124,7 @@ fn main() {
     let deserialized: MyModel = serde_json::from_str(&serialized).unwrap();
     println!("Deserialized: {:?}", deserialized.kalman);
 }
-'''
+```
 
 ## Contribution
 
